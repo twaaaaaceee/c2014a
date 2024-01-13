@@ -1,6 +1,6 @@
 import random
 class Human:
-    def __init__(self,name="Human",car=None, job=None, home=None, study=None, cat=None,):
+    def __init__(self,name="Human",car=None, job=None, home=None, study=None, cat=None):
         self.name=name
         self.money=100
         self.gladness=50
@@ -8,6 +8,8 @@ class Human:
         self.job=job
         self.home=home
         self.car=car
+        self.study=study
+        self.cat=cat
 
     def get_home(self):
         self.home=House()
@@ -33,8 +35,8 @@ class Human:
             if self.cat_satiety>=100:
                 self.cat_satiety=100
                 return
-            self.cat_satiety+=5
-            self.cat.food-=5
+        self.cat_satiety+=5
+        self.cat.food-=5
     def get_car(self):
         self.car=Auto(brand_of_car)
     def eat(self):
@@ -106,7 +108,7 @@ class Human:
         car_indexes=f"{self.car.brand} car indexes"
         print(f"{car_indexes:^50}", "\n")
         print(f"Fuel - {self.car.fuel}")
-        print(f"Strength - {self.car.strength}")
+        print(f"Strenght - {self.car.strenght}")
     def is_alive(self):
         if self.gladness<0:
             print("Depresion")
@@ -117,7 +119,7 @@ class Human:
         if self.money<-500:
             print("Bankrupt")
             return False
-    def live(self):
+    def live(self,day):
         if self.is_alive()==False:
             return False
         if self.home is None:
@@ -129,7 +131,7 @@ class Human:
         if self.job is None:
             self.get_job()
             print(f"I don't have a job, I'm going to get a jpb{self.job.job} with salary {self.job.salary}")
-        self.days_indexes("day")
+        self.days_indexes(day)
         dice=random.randint(1,4)
         if self.satiety<20:
             print("I'll go eat")
@@ -144,7 +146,7 @@ class Human:
         elif self.money<0:
             print("Start worling")
             self.work()
-        elif self.car.strength<15:
+        elif self.car.strenght<15:
             print("I need to repair my car")
             self.to_repair()
         elif dice==1:
@@ -191,20 +193,20 @@ job_list={
     "Java developer":{"salary":50, "gladness_less":10},
     "Python developer":{"salary":40, "gladness_less":3},
     "C++ developer":{"salary":45, "gladness_less":25},
-    "Rust developer":{"salary":70, "gladness_less":1}},
+    "Rust developer":{"salary":70, "gladness_less":1}}
 
 study_list={
     "Study Java":{"price":50, "gladness_less":10},
     "Study Python":{"price":40, "gladness_less":3},
     "Study C++":{"price":45, "gladness_less":25},
-    "Study Rust":{"price":70, "gladness_less":1},
+    "Study Rust":{"price":70, "gladness_less":1}
 }
 
 cat_list={
     "British cat":{"price":500, "gladness":50},
     "Bengal cat":{"price":200, "gladness":20},
     "American cat":{"price":1000, "gladness":100},
-    "Australian cat":{"price":750, "gladness":75},
+    "Australian cat":{"price":750, "gladness":75}
 }
 
 
@@ -214,25 +216,19 @@ class Job:
         self.salary=job_list[self.job]["salary"]
         self.gladness_less = job_list[self.job]["gladness_less"]
 
-nick=Human(name="Nick")
-for dat in range(1,8):
-    if nick.live("day")==False:
-        break
+
 class Learn:
     def __init__(self,study_list):
         self.study=random.choice(list(study_list))
         self.price=study_list[self.study]["price"]
         self.gladness_less = study_list[self.study]["gladness_less"]
-nick=Human(name="Nick")
-for dat in range(1,8):
-    if nick.live("day")==False:
-        break
+
 class Cat:
     def __init__(self,cat_list):
         self.cat=random.choice(list(cat_list))
         self.price=cat_list[self.cat]["price"]
         self.gladness = cat_list[self.cat]["gladness"]
-nick=Cat(name="Yoruiti")
-for dat in range (1,8):
-    if nick.live("day")==False:
+nick=Human(name="nick")
+for day in range (1,8):
+    if nick.live(day)==False:
         break
